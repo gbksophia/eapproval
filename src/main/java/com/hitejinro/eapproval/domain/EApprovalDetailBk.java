@@ -23,7 +23,7 @@ public class EApprovalDetailBk {
     private String twid;
 
     @Column(nullable = false)
-    private String tw57fbkey;
+    private String tw57ifkey;
 
     @Column(nullable = false)
     private String twuser;

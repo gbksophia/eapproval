@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="ko">
-{{>main/layout/main_index_layout_head}}
+{{>layout/main_index_layout_head}}
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
     <div>테스트입니다.</div>
+    <form class="container">
+        <div class="mb-3">
+            <label class="form-label">전자결재 Key</label>
+            <input type="text" class="form-control" name="ifkey">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">USER</label>
+            <input type="text" class="form-control" name="user">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
     <div id="example-table"></div>
 </body>
 </html>

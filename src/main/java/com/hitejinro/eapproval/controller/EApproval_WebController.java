@@ -6,6 +6,7 @@ import com.hitejinro.eapproval.dto.EApprovalSearchDto;
 import com.hitejinro.eapproval.service.EApprovalService;
 import com.hitejinro.eapproval.service.impl.EApprovalServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,12 +33,12 @@ public class EApproval_WebController {
     @GetMapping(value = "/")
     public String eapproval_main_index(Model model){
         EApprovalSearchDto searchDto = new EApprovalSearchDto();
-        searchDto.setFbkey("AA382564                                ");
+        searchDto.setIfkey("AA382564                                ");
         searchDto.setUser("CON04               ");
-        searchDto.setLt("43352");
-        List<EApprovalDetailDto> list = eApprovalService.getEApprovalDetail(searchDto);
-        log.info("list="+ list);
-        return "main/main_index";
+        searchDto.setLt("AA  ");
+        JSONArray result = eApprovalService.getEApprovalDetail(searchDto);
+        model.addAttribute("result", result);
+        return "main_index";
     }
 
 }

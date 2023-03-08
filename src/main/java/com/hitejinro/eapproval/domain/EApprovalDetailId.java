@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class EApprovalDetailId implements Serializable {
     @Column
-    private String tw57fbkey;
+    private String tw57ifkey;
     @Column
     private String twuser;
     @Column

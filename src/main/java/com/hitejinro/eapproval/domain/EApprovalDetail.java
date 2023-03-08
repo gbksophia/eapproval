@@ -16,11 +16,11 @@ import javax.persistence.*;
 public class EApprovalDetail {
 
     @Id
-    @Column(name="twid", nullable = false)
+    @Column(nullable = false)
     private String id;
 
-    @Column(name="tw57fbkey", nullable = false)
-    private String fbkey;
+    @Column(name="tw57ifkey", nullable = false)
+    private String ifkey;
 
     @Column(name="twuser", nullable = false)
     private String user;

@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class EApprovalSearchDto {
-    private String fbkey;
+    private String ifkey;
     private String user;
     private String lt;
 }

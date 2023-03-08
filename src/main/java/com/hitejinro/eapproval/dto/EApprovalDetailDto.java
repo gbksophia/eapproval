@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class EApprovalDetailDto {
     private String id;
-    private String fbkey;
+    private String ifkey;
     private String user;
     private String ukid;
     private String lt;
