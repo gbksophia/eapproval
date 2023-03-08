@@ -32,12 +32,16 @@ public class EApproval_WebController {
 
     @GetMapping(value = "/")
     public String eapproval_main_index(Model model){
-        EApprovalSearchDto searchDto = new EApprovalSearchDto();
+        /*EApprovalSearchDto searchDto = new EApprovalSearchDto();
         searchDto.setIfkey("AA382564                                ");
         searchDto.setUser("CON04               ");
         searchDto.setLt("AA  ");
         JSONArray result = eApprovalService.getEApprovalDetail(searchDto);
-        model.addAttribute("result", result);
+        model.addAttribute("result", result);*/
+
+        model.addAttribute("ifkey", "AA382564                                ");
+        model.addAttribute("user", "CON04               ");
+
         return "main_index";
     }
 

@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service @Slf4j
@@ -35,7 +32,7 @@ public class EApprovalServiceImpl implements EApprovalService {
     public JSONArray getEApprovalDetail(EApprovalSearchDto searchDto){
         log.info("searchDto="+ searchDto);
         /*List<EApprovalDetailDto> eappDetailList = eApprovalDetailRepository.findByIfFkeyAndUserAndLt
-                (searchDto.getFbkey(), searchDto.getUser(), searchDto.getLt()).stream()
+                (searchDto.getIfkey(), searchDto.getUser(), searchDto.getLt()).stream()
                 .map(eApprovalDetail -> modelMapper.map(eApprovalDetail, EApprovalDetailDto.class))
                 .collect(Collectors.toList());*/
 
@@ -55,7 +52,8 @@ public class EApprovalServiceImpl implements EApprovalService {
             }
             log.info("aa="+  dto.getAa() + " || aaDebit="+  dto.getAaDebit() + " || aaCredit="+  dto.getAaCredit());
 
-            JSONObject jObj = toJSONObject(dto.toString());
+            //JSONObject jObj = EApprovalDetailDtoIntoJSONObject(dto.toString());
+            JSONObject jObj = eAppDetailDtoIntoJSONObject(dto);
             eAppDetailArr.add(jObj);
 
         }
@@ -88,15 +86,20 @@ public class EApprovalServiceImpl implements EApprovalService {
         return result;
     }
 
-    private JSONObject toJSONObject(String objectToString) {
+    private JSONObject EApprovalDetailDtoIntoJSONObject(String objectToString) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String obj = objectToString.substring(0, objectToString.length() - 1);
+        log.debug("--- objectToString : " + objectToString);
+        log.debug("--- obj(1) : " + obj);
+        log.debug("--- ogj.split 결과="+ Arrays.toString(obj.split("\\(")));
         obj = obj.split("\\(")[1];
         String[] objArr = obj.split(",");
+        log.debug("--- obj(2) : " + obj);
+        log.debug("--- objArr : " + objArr);
 
         Map<String, Object> objMap = new HashMap<>();
         for (String objStr : objArr) {
-            //log.debug("--- objStr : " + objStr);
+            log.debug("--- objStr : " + objStr);
             String key = objStr.trim().split("=")[0];
             java.io.Serializable value;
             try {
@@ -160,5 +163,73 @@ public class EApprovalServiceImpl implements EApprovalService {
 
     private boolean isCastToBoolean(String booleanString) {
         return booleanString.equalsIgnoreCase("true") || booleanString.equalsIgnoreCase("false");
+    }
+
+    private JSONObject eAppDetailDtoIntoJSONObject(EApprovalDetailDto dto){
+        JSONObject jObj = new JSONObject();
+        jObj.put("id", dto.getId());
+        jObj.put("ifkey", dto.getIfkey());
+        jObj.put("user", dto.getUser());
+        jObj.put("ukid", dto.getUkid());
+        jObj.put("lt", dto.getLt());
+        jObj.put("icut" ,dto.getIcut());
+        jObj.put("dl10" ,dto.getDl10());
+        jObj.put("icu", dto.getIcu());
+        jObj.put("kco", dto.getKco());
+        jObj.put("dct", dto.getDct());
+        jObj.put("dl01", dto.getDl01());
+        jObj.put("doc", dto.getDoc());
+
+        jObj.put("dgj", dto.getDgj());
+        jObj.put("gddgj", dto.getGddgj());
+        jObj.put("dicj", dto.getDicj());
+        jObj.put("gddicj", dto.getGddicj());
+        jObj.put("dsvj", dto.getDsvj());
+        jObj.put("gddsvj", dto.getGddsvj());
+
+        jObj.put("mcu", dto.getMcu());
+        jObj.put("dl02", dto.getDl02());
+        jObj.put("obj", dto.getObj());
+        jObj.put("sub", dto.getSub());
+        jObj.put("ani", dto.getAni());
+        jObj.put("dl03", dto.getDl03());
+
+        jObj.put("aa", dto.getAa());
+        jObj.put("aaDebit", dto.getAaDebit());
+        jObj.put("aaCredit", dto.getAaCredit());
+
+
+        jObj.put("acr", dto.getAcr());
+        jObj.put("crcd", dto.getCrcd());
+        jObj.put("crr", dto.getCrr());
+        jObj.put("fy", dto.getFy());
+        jObj.put("pn", dto.getPn());
+        jObj.put("re", dto.getRe());
+
+        jObj.put("hdgj", dto.getHdgj());
+        jObj.put("gdhdgj", dto.getGdhdgj());
+
+
+        jObj.put("exr", dto.getExr());
+        jObj.put("exa", dto.getExa());
+        jObj.put("dcto", dto.getDcto());
+        jObj.put("pdct", dto.getPdct());
+        jObj.put("po", dto.getPo());
+        jObj.put("u", dto.getU());
+        jObj.put("um", dto.getUm());
+        jObj.put("sblt", dto.getSblt());
+        jObj.put("sbl", dto.getSbl());
+        jObj.put("dl09", dto.getDl09());
+        jObj.put("glc", dto.getGlc());
+        jObj.put("itm", dto.getItm());
+
+        jObj.put("dsc1", dto.getDsc1());
+        jObj.put("exr1", dto.getExr1());
+        jObj.put("txa1", dto.getTxa1());
+        jObj.put("vinv", dto.getVinv());
+        jObj.put("asid", dto.getAsid());
+        jObj.put("dl04", dto.getDl04());
+
+        return jObj;
     }
 }

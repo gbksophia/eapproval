@@ -7,17 +7,19 @@
 </head>
 <body>
     <div>테스트입니다.</div>
-    <form class="container">
+    <form class="container" name="eApprovalSearchForm" id="eAppSearchFrm" action="" onsubmit="return false;">
         <div class="mb-3">
             <label class="form-label">전자결재 Key</label>
-            <input type="text" class="form-control" name="ifkey">
+            <input type="text" class="form-control" name="ifkey" value="{{ifkey}}" readonly>
         </div>
         <div class="mb-3">
             <label class="form-label">USER</label>
-            <input type="text" class="form-control" name="user">
+            <input type="text" class="form-control" name="user" value="{{user}}" readonly>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="hidden" name="lt" value="AA  " />
+        <button onclick="searchEApprovalList()"  type="button" class="btn btn-primary">확인</button>
     </form>
+    <div id="grid-table"></div>
     <div id="example-table"></div>
 </body>
 </html>
