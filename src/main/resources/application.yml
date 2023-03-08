@@ -1,0 +1,174 @@
+spring:
+  profiles:
+    active: ${spring.profiles.active}
+    version: 0.0.1
+  devtools:
+    livereload:
+      enabled: true
+  main:
+    allow-bean-definition-overriding: true
+    mustache:
+      enabled: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+    dispatch-options-request: false
+    hiddenmethod:
+      filter:
+        enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle12cDialect
+    generate-ddl: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  datasource:
+    hikari:
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+server:
+  http2:
+    enabled: true
+  tomcat:
+    max-connections: 1000
+    relaxed-query-chars: '{,},[,]'
+    threads:
+      max: 200
+    uri-encoding: UTF-8
+  servlet:
+    session:
+      tracking-modes: cookie
+
+#######################################################################################################################
+##################################################### C   R   P #######################################################
+#######################################################################################################################
+--- # crp
+spring:
+  config:
+    activate:
+      on-profile: crp
+  datasource:
+    url: jdbc:oracle:thin:@192.168.103.152:1521:BEVERPDB
+    hikari:
+      username: CRPDTA
+      password: CRPDTA
+      schema: CRPDTA
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    main:
+      mustache:
+        cache: true
+
+logging:
+  level:
+    org.springframework.web.filter.CommonsRequestLoggingFilter: debug
+    root: info
+    com:
+      hitejinro:
+        eapproval: trace
+  file:
+    name: eapproval_log
+    path: C:/logs/
+
+
+server:
+  port: 8237
+
+
+domain:
+  protocol: "https"
+  host: "192.168.103.163"
+  port: "8237"
+
+#######################################################################################################################
+#################################################### P  R  O  D #######################################################
+#######################################################################################################################
+--- # prod
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:oracle:thin:@192.168.103.152:1521:BEVERPDB
+    hikari:
+      username: PRODDTA
+      password: PRODDTA
+      schema: PRODDTA
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    main:
+      mustache:
+        cache: true
+
+logging:
+  level:
+    org.springframework.web.filter.CommonsRequestLoggingFilter: debug
+    root: info
+    com:
+      hitejinro:
+        eapproval: trace
+  file:
+    name: eapproval_log
+    path: C:/logs/
+
+server:
+  port: 8237
+
+
+domain:
+  protocol: "https"
+  host: "192.168.103.162"
+  port: "8237"
+
+#######################################################################################################################
+################################################ DEV ####################################################
+#######################################################################################################################
+--- # dev
+# 로컬 PC로 개발 시 사용하는 프로필로 WILUS DB 이용함.
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:oracle:thin:@193.123.229.35:1521:ORCL
+    hikari:
+      username: WCSSDTA
+      password: Wilus12#
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    main:
+      mustache:
+        cache: true
+
+logging:
+  level:
+    org.springframework.web.filter.CommonsRequestLoggingFilter: debug
+    root: info
+    com:
+      hitejinro:
+        eapproval: trace
+  file:
+    name: eapproval_log
+    path: C:/logs/
+
+server:
+  port: 8237
+
+
+domain:
+  protocol: "https"
+  host: "localhost"
+  port: "8237"
