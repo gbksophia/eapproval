@@ -3,24 +3,45 @@
 {{>layout/main_index_layout_head}}
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>전포 전자결재 상신 상세자료 조회 프로그램</title>
 </head>
 <body>
-    <div>테스트입니다.</div>
-    <form class="container" name="eApprovalSearchForm" id="eAppSearchFrm" action="" onsubmit="return false;">
-        <div class="mb-3">
-            <label class="form-label">전자결재 Key</label>
-            <input type="text" class="form-control" name="ifkey" value="{{ifkey}}" readonly>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="/img/hite-jinro-logo2.jpg" alt="" width="130" height="24" class="d-inline-block align-text-top"></a>
         </div>
-        <div class="mb-3">
-            <label class="form-label">USER</label>
-            <input type="text" class="form-control" name="user" value="{{user}}" readonly>
+    </nav>
+    <div class="container mt-3">
+        <div class="row mb-3">
+            <h2>전표 전자결재 상신 상세자료 조회 프로그램</h2>
         </div>
-        <input type="hidden" name="lt" value="AA  " />
-        <button onclick="searchEApprovalList()"  type="button" class="btn btn-primary">확인</button>
-    </form>
-    <div id="grid-table"></div>
-    <div id="example-table"></div>
+        <div class="row mb-2">
+            <form name="eApprovalSearchForm" id="eAppSearchFrm" action="" onsubmit="return false;">
+                <div class="row g-3">
+                    <div class="col-sm-5">
+                        <label class="form-label">전자결재 Key</label>
+                        <input type="text" class="form-control" name="ifkey" value="{{ifkey}}" readonly>
+                    </div>
+                    <div class="col-sm-5">
+                        <label class="form-label">USER</label>
+                        <input type="text" class="form-control" name="user" value="{{user}}" readonly>
+                    </div>
+                    <input type="hidden" name="lt" value="AA  " />
+                    <div class="col-sm-2">
+                        <button onclick="searchEApprovalList()" type="button" class="btn btn-primary form-control" style="margin-top: 1.9rem;">검색</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row mt-4">
+            <div id="grid-table" class="container" ></div>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>Copyright© 2023 HITEJINRO CO.LTD. ALL RIGHTS RESERVED.</p>
+    </footer>
+
 </body>
 </html>
 <script src="/js/main_index.js"></script>

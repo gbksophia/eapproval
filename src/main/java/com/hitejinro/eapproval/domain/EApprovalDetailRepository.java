@@ -16,9 +16,9 @@ public interface EApprovalDetailRepository extends JpaRepository<EApprovalDetail
             value = "SELECT * " +
                     "FROM VWF57FBWB" +
                     " WHERE 1=1 " +
-                    "   AND TW57IFKEY = TRIM(:ifkey)" +
-                    "   AND TWUSER = TRIM(:user)" +
-                    "   AND TWLT = TRIM(:lt)"
+                    "   AND TRIM(TW57IFKEY) = TRIM(:ifkey)" +
+                    "   AND TRIM(TWUSER) = TRIM(:user)" +
+                    "   AND TRIM(TWLT) = TRIM(:lt)"
     )
     List<EApprovalDetail> findEApprovalDetailList(
             @Param(value = "ifkey") String ifkey,

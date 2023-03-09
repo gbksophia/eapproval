@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @Controller
@@ -30,17 +32,12 @@ public class EApproval_WebController {
     @Value("${spring.profiles.active}")
     private String env;
 
-    @GetMapping(value = "/")
-    public String eapproval_main_index(Model model){
-        /*EApprovalSearchDto searchDto = new EApprovalSearchDto();
-        searchDto.setIfkey("AA382564                                ");
-        searchDto.setUser("CON04               ");
-        searchDto.setLt("AA  ");
-        JSONArray result = eApprovalService.getEApprovalDetail(searchDto);
-        model.addAttribute("result", result);*/
+    @GetMapping(value = "/eapproval/{ifkey}/{user}")
+    public String eapproval_main_index(@PathVariable String ifkey, @PathVariable  String user, Model model){
+        log.info("-- eapproval interface web 링크 들어감.");
 
-        model.addAttribute("ifkey", "AA382564                                ");
-        model.addAttribute("user", "CON04               ");
+        model.addAttribute("ifkey", ifkey);
+        model.addAttribute("user", user);
 
         return "main_index";
     }

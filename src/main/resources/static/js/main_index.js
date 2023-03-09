@@ -42,11 +42,11 @@ var table2 = new Tabulator("#example-table", {
 });*/
 
 let col = [
-    {title: "id", field: "id", visible: false, hozAlign: "left", vertAlign: "middle"},
-    {title: "전자결재KEY", field: "ifkey", hozAlign: "left", vertAlign: "middle", width: 130, },
-    {title: "User", field: "user", hozAlign: "left", vertAlign: "middle", width: 130, },
-    {title: "Ukid", field: "ukid", visible: false, hozAlign: "left", vertAlign: "middle", width: 130, },
-    {title: "원장유형", field: "lt", hozAlign: "left", vertAlign: "middle", width: 130, },
+    {title: "id", field: "id", visible: false, hozAlign: "left", vertAlign: "middle", visible: false,},
+    {title: "전자결재KEY", field: "ifkey", hozAlign: "left", vertAlign: "middle", width: 130, visible: false,},
+    {title: "User", field: "user", hozAlign: "left", vertAlign: "middle", width: 130, visible: false,},
+    {title: "Ukid", field: "ukid", visible: false, hozAlign: "left", vertAlign: "middle", width: 130, visible: false,},
+    {title: "원장유형", field: "lt", hozAlign: "left", vertAlign: "middle", width: 130, visible: false,},
     {title: "배치유형", field: "icut", hozAlign: "left", vertAlign: "middle", width: 130, },
     {title: "배치유형 명", field: "dl10", hozAlign: "left", vertAlign: "middle", width: 130, },
     {title: "배치번호", field: "icu", hozAlign: "left", vertAlign: "middle", width: 130, },
@@ -65,7 +65,7 @@ let col = [
     {title: "보조계정", field: "sub", hozAlign: "left", vertAlign: "middle", width: 130, },
     {title: "계정번호", field: "ani", hozAlign: "left", vertAlign: "middle", width: 130, },
     {title: "계정명칭", field: "dl03", hozAlign: "left", vertAlign: "middle", width: 210, },
-    {title: "차대변 통합", field: "aa", hozAlign: "left", vertAlign: "right", width: 130, /*visible: false,*/ },
+    {title: "차대변 통합", field: "aa", hozAlign: "left", vertAlign: "right", width: 130, visible: false, },
     {title: "차변", field: "aaDebit", hozAlign: "right", vertAlign: "middle", width: 130,
         bottomCalc:"sum", bottomCalcParams:{precision:false},
         bottomCalcFormatter :"money", bottomCalcFormatterParams :{decimal:".", thousand:",", symbol:"₩", precision:false,},
@@ -76,7 +76,11 @@ let col = [
         bottomCalcFormatter :"money", bottomCalcFormatterParams :{decimal:".", thousand:",", symbol:"₩", precision:false,},
         formatter:"money", formatterParams:{decimal:".", thousand:",", symbol:"₩", precision:false,},
      },
-    {title: "외화금액", field: "acr", hozAlign: "left", vertAlign: "right", width: 130, },
+    {title: "외화금액", field: "acr",  hozAlign: "right", vertAlign: "middle", width: 130,
+        bottomCalc:"sum", bottomCalcParams:{precision:false},
+        bottomCalcFormatter :"money", bottomCalcFormatterParams :{decimal:".", thousand:",", symbol:"₩", precision:false,},
+        formatter:"money", formatterParams:{decimal:".", thousand:",", symbol:"₩", precision:false,},
+    },
     {title: "통화코드", field: "crcd", hozAlign: "left", vertAlign: "middle", width: 130, },
     {title: "환율", field: "crr", hozAlign: "left", vertAlign: "middle", width: 130, },
     {title: "회계연도", field: "fy", hozAlign: "left", vertAlign: "middle", width: 130, },
@@ -107,16 +111,17 @@ let col = [
 let table = new Tabulator("#grid-table", {
     data:[],           //load row data from array
     layout:"fitColumns",      //fit columns to width of table
-    height:"311px",
+    height:"100%",
+    width: "100%",
     renderHorizontal:"virtual",
     addRowPos:"top",          //when adding a new row, add it to the top of the table
     history:true,             //allow undo and redo actions on the table
     pagination:"local",       //paginate the data
-    paginationSize:10,         //allow 10 rows per page of data
+    paginationSize:50,         //allow 10 rows per page of data
     paginationCounter:"rows", //display count of paginated rows in footer
     movableColumns:true,      //allow column order to be changed
     initialSort:[             //set the initial sort order of the data
-        {column:"fbkey", dir:"asc"}, {column:"user", dir:"asc"}, {column:"ukid", dir:"asc"},
+        {column:"ifkey", dir:"asc"}, {column:"user", dir:"asc"}, {column:"ukid", dir:"asc"},
     ],
     columnDefaults:{
         tooltip:true,         //show tool tips on cells
@@ -136,17 +141,24 @@ function objectifyForm(formArray) {//serializeArray data function
 }
 
 function searchEApprovalList(){
+    console.log('전자결재 상세자료 서버에서 조회하는 이벤트 trigger됨');
     let formData = new FormData(document.getElementById('eAppSearchFrm'));
     let formArr = objectifyForm($("#eAppSearchFrm").serializeArray());
     console.log('formArr=', formArr); // {ifkey: 'AA382564                                ', user: 'CON04               ', lt: 'AA  '}
 
     table.setData(
-        "/rest/eApproval/search",
+        "/eApproval/rest/search",
         formArr,
         "POST"
     );
 
-
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('page load completed.');
+    searchEApprovalList();
+}, false);
+
+
 
 

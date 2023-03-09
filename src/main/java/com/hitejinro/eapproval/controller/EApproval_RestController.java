@@ -22,7 +22,7 @@ public class EApproval_RestController {
         this.eApprovalService = eApprovalService;
     }
 
-    @PostMapping("/rest/eApproval/search")
+    @PostMapping("/eApproval/rest/search")
     public JSONArray searchEApprovalDetailData(@RequestBody EApprovalSearchDto searchDto){
         return eApprovalService.getEApprovalDetail(searchDto);
     }
