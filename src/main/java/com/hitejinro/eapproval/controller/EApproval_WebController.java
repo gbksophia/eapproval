@@ -32,7 +32,7 @@ public class EApproval_WebController {
     @Value("${spring.profiles.active}")
     private String env;
 
-    @GetMapping(value = "/eapproval/{ifkey}/{user}")
+    @GetMapping(value = "/ea/{ifkey}/{user}")
     public String eapproval_main_index(@PathVariable String ifkey, @PathVariable  String user, Model model){
         log.info("-- eapproval interface web 링크 들어감.");
 

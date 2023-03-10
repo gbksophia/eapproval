@@ -1,51 +1,24 @@
-//define data array
-/*var tabledata = [
-    {id:1, name:"Oli Bob", progress:12, gender:"male", rating:1, col:"red", dob:"19/02/1984", car:1},
-    {id:2, name:"Mary May", progress:1, gender:"female", rating:2, col:"blue", dob:"14/05/1982", car:true},
-    {id:3, name:"Christine Lobowski", progress:42, gender:"female", rating:0, col:"green", dob:"22/05/1982", car:"true"},
-    {id:4, name:"Brendon Philips", progress:100, gender:"male", rating:1, col:"orange", dob:"01/08/1980"},
-    {id:5, name:"Margret Marmajuke", progress:16, gender:"female", rating:5, col:"yellow", dob:"31/01/1999"},
-    {id:6, name:"Frank Harbours", progress:38, gender:"male", rating:4, col:"red", dob:"12/05/1966", car:1},
-];
+/*
+* 2023.03.10 윌러스 김근비
+* main_index.mustache
+* 하이트진로 전표 전자결재 상신 상세자료 조회 페이지에서 사용되는 JS입니다.
+*
+* */
 
-/!*!//initialize table
-var table = new Tabulator("#example-table", {
-    data:tabledata, //assign data to table
-    autoColumns:true, //create columns from data field names
-});*!/
 
-var table2 = new Tabulator("#example-table", {
-    data:tabledata,           //load row data from array
-    layout:"fitColumns",      //fit columns to width of table
-    responsiveLayout:"hide",  //hide columns that dont fit on the table
-    addRowPos:"top",          //when adding a new row, add it to the top of the table
-    history:true,             //allow undo and redo actions on the table
-    pagination:"local",       //paginate the data
-    paginationSize:7,         //allow 7 rows per page of data
-    paginationCounter:"rows", //display count of paginated rows in footer
-    movableColumns:true,      //allow column order to be changed
-    initialSort:[             //set the initial sort order of the data
-        {column:"name", dir:"asc"},
-    ],
-    columnDefaults:{
-        tooltip:true,         //show tool tips on cells
-    },
-    columns:[                 //define the table columns
-        {title:"Name", field:"name", editor:"input"},
-        {title:"Task Progress", field:"progress", hozAlign:"left", formatter:"progress", editor:true},
-        {title:"Gender", field:"gender", width:95, editor:"select", editorParams:{values:["male", "female"]}},
-        {title:"Rating", field:"rating", formatter:"star", hozAlign:"center", width:100, editor:true},
-        {title:"Color", field:"col", width:130, editor:"input"},
-        {title:"Date Of Birth", field:"dob", width:130, sorter:"date", hozAlign:"center"},
-        {title:"Driver", field:"car", width:90,  hozAlign:"center", formatter:"tickCross", sorter:"boolean", editor:true},
-    ],
-});*/
+let tableData = [];
 
+// 페이지 로드시에 서버에서 자동으로 전자결재 자료 데이터를 가져와서 tableData에 매핑.
+console.log('그리드 컬럼 설정 및 그리드 초기 생성 이전에 서버에서 데이터 가져오는 로직 작동됨');
+searchEApprovalList_PageLoad();
+
+// 그리드 컬럼 설정
 let col = [
-    {title: "id", field: "id", visible: false, hozAlign: "left", vertAlign: "middle", visible: false,},
+    {formatter:"rownum", hozAlign:"center", width:40},
+    {title: "id", field: "id", visible: false, hozAlign: "left", vertAlign: "middle", visible: false, },
     {title: "전자결재KEY", field: "ifkey", hozAlign: "left", vertAlign: "middle", width: 130, visible: false,},
-    {title: "User", field: "user", hozAlign: "left", vertAlign: "middle", width: 130, visible: false,},
-    {title: "Ukid", field: "ukid", visible: false, hozAlign: "left", vertAlign: "middle", width: 130, visible: false,},
+    {title: "User", field: "user", hozAlign: "left", vertAlign: "middle", width: 130, visible: false, },
+    {title: "Ukid", field: "ukid", visible: false, hozAlign: "left", vertAlign: "middle", width: 130, visible: false, },
     {title: "원장유형", field: "lt", hozAlign: "left", vertAlign: "middle", width: 130, visible: false,},
     {title: "배치유형", field: "icut", hozAlign: "left", vertAlign: "middle", width: 130, },
     {title: "배치유형 명", field: "dl10", hozAlign: "left", vertAlign: "middle", width: 130, },
@@ -64,22 +37,43 @@ let col = [
     {title: "사업단위 명", field: "obj", hozAlign: "left", vertAlign: "middle", width: 130, },
     {title: "보조계정", field: "sub", hozAlign: "left", vertAlign: "middle", width: 130, },
     {title: "계정번호", field: "ani", hozAlign: "left", vertAlign: "middle", width: 130, },
-    {title: "계정명칭", field: "dl03", hozAlign: "left", vertAlign: "middle", width: 210, },
+    {title: "계정명칭", field: "dl03", hozAlign: "left", vertAlign: "middle", width: 210,
+        bottomCalc: function (){return '합계';},
+        bottomCalcFormatter: function (cell){
+            let text =  cell.getValue();
+            return "<div style='text-align:center;'>" + text + "</div>";
+        },
+    },
     {title: "차대변 통합", field: "aa", hozAlign: "left", vertAlign: "right", width: 130, visible: false, },
     {title: "차변", field: "aaDebit", hozAlign: "right", vertAlign: "middle", width: 130,
         bottomCalc:"sum", bottomCalcParams:{precision:false},
         bottomCalcFormatter :"money", bottomCalcFormatterParams :{decimal:".", thousand:",", symbol:"₩", precision:false,},
         formatter:"money", formatterParams:{decimal:".", thousand:",", symbol:"₩", precision:false,},
-     },
+    },
     {title: "대변", field: "aaCredit", hozAlign: "right", vertAlign: "middle", width: 130,
         bottomCalc:"sum", bottomCalcParams:{precision:false},
         bottomCalcFormatter :"money", bottomCalcFormatterParams :{decimal:".", thousand:",", symbol:"₩", precision:false,},
         formatter:"money", formatterParams:{decimal:".", thousand:",", symbol:"₩", precision:false,},
-     },
+    },
     {title: "외화금액", field: "acr",  hozAlign: "right", vertAlign: "middle", width: 130,
-        bottomCalc:"sum", bottomCalcParams:{precision:false},
-        bottomCalcFormatter :"money", bottomCalcFormatterParams :{decimal:".", thousand:",", symbol:"₩", precision:false,},
-        formatter:"money", formatterParams:{decimal:".", thousand:",", symbol:"₩", precision:false,},
+        formatter:"money",
+        formatterParams: function (cell){
+            let row = cell.getRow();
+            let currencyCode = row.getCell("crcd").getValue();
+            if(currencyCode === 'KRW'){
+                return {decimal:".", thousand:",", symbol:"₩", precision:0,};
+            }else if(currencyCode === 'EUR'){
+                return {decimal:".", thousand:",", symbol:"€", precision:2,};
+            }else if(currencyCode === 'USD'){
+                return {decimal:".", thousand:",", symbol:"$", precision:2,};
+            }else if(currencyCode === 'CNY'){
+                return {decimal:".", thousand:",", symbol:"¥", precision:2,};
+            }else if(currencyCode === 'JPY'){
+                return {decimal:".", thousand:",", symbol:"¥", precision:0,};
+            }else{
+                return {decimal:".", thousand:",", symbol:"", precision:2,};
+            }
+        }
     },
     {title: "통화코드", field: "crcd", hozAlign: "left", vertAlign: "middle", width: 130, },
     {title: "환율", field: "crr", hozAlign: "left", vertAlign: "middle", width: 130, },
@@ -108,8 +102,9 @@ let col = [
     {title: "자산명칭", field: "dl04", hozAlign: "left", vertAlign: "middle", width: 130, }
 ];
 
+// 그리도 초기 생성 기능
 let table = new Tabulator("#grid-table", {
-    data:[],           //load row data from array
+    data:tableData,           //load row data from array
     layout:"fitColumns",      //fit columns to width of table
     height:"100%",
     width: "100%",
@@ -127,24 +122,50 @@ let table = new Tabulator("#grid-table", {
         tooltip:true,         //show tool tips on cells
     },
     columns:col,
-    ajaxContentType: "json"
+    ajaxContentType: "json",
 });
 
 
-
 function objectifyForm(formArray) {//serializeArray data function
-    var returnArray = {};
-    for (var i = 0; i < formArray.length; i++) {
+    let returnArray = {};
+    for (let i = 0; i < formArray.length; i++) {
         returnArray[formArray[i]['name']] = formArray[i]['value'];
     }
     return returnArray;
 }
 
-function searchEApprovalList(){
-    console.log('전자결재 상세자료 서버에서 조회하는 이벤트 trigger됨');
-    let formData = new FormData(document.getElementById('eAppSearchFrm'));
+
+function getSearchKeyWord(){
+    //console.log('Form에서 검색조건 가져오는 로직');
     let formArr = objectifyForm($("#eAppSearchFrm").serializeArray());
-    console.log('formArr=', formArr); // {ifkey: 'AA382564                                ', user: 'CON04               ', lt: 'AA  '}
+    return formArr;
+}
+
+function searchEApprovalList_PageLoad(){
+
+    console.log('자동으로 서버에서 전자결재 상세자료를 조회하는 이벤트 trigger됨');
+    let formArr = getSearchKeyWord();
+    //console.log('formArr=', formArr);
+
+    $.ajax({
+        url: '/eApproval/rest/search',
+        type: 'POST',
+        datatype:'json',
+        contentType : "application/json; charset=UTF-8",
+        data: JSON.stringify(formArr),
+        async: false,
+        success: (result) => {
+            tableData = result;
+        }
+    });
+
+}
+
+
+function searchEApprovalList_Button(){
+
+    console.log('검색버튼 클릭하여 서버에서 전자결재 상세자료 조회하는 이벤트 trigger됨');
+    let formArr = getSearchKeyWord();
 
     table.setData(
         "/eApproval/rest/search",
@@ -154,9 +175,10 @@ function searchEApprovalList(){
 
 }
 
+// 새로고침이나 URL에서 전자결재Key와 결재요청자 값 변경해서 페이지 들어갈때 작동하는 로직
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('page load completed.');
-    searchEApprovalList();
+    console.log('[DOMContentLoaded] page load completed.');
+    //searchEApprovalList_PageLoad();
 }, false);
 
 

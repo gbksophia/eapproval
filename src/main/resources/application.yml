@@ -38,6 +38,12 @@ server:
       tracking-modes: cookie
     encoding:
       force: true
+  ssl:
+    enabled: true
+    key-store: classpath:WILD.hitejinro.com.pfx
+    key-store-type: PKCS12
+    key-store-password: HJadmin12!@
+
 
 #######################################################################################################################
 ##################################################### C   R   P #######################################################

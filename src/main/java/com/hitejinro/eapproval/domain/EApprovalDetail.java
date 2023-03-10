@@ -26,7 +26,7 @@ public class EApprovalDetail {
     private String user;
 
     @Column(name="twukid", nullable = false)
-    private int ukid;
+    private Integer ukid;
 
     @Column(name="twlt")
     private String lt;
@@ -53,13 +53,13 @@ public class EApprovalDetail {
     private Integer doc;
 
     @Column(name="twdgj")
-    private int dgj;
+    private Integer dgj;
 
     @Column(name="twdicj")
-    private int dicj;
+    private Integer dicj;
 
     @Column(name="twdsvj")
-    private int dsvj;
+    private Integer dsvj;
 
     @Column(name="twmcu")
     private String mcu;
@@ -101,7 +101,7 @@ public class EApprovalDetail {
     private String re;
 
     @Column(name="twhdgj")
-    private int hdgj;
+    private Integer hdgj;
 
     @Column(name="twexr")
     private String exr;

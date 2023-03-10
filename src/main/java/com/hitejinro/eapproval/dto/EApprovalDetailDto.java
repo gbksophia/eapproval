@@ -20,9 +20,9 @@ public class EApprovalDetailDto {
     private String dct;
     private String dl01;
     private Integer doc;
-    private int dgj;
-    private int dicj;
-    private int dsvj;
+    private Integer dgj;
+    private Integer dicj;
+    private Integer dsvj;
     private String mcu;
     private String dl02;
     private String obj;
@@ -36,7 +36,7 @@ public class EApprovalDetailDto {
     private Integer fy;
     private Integer pn;
     private String re;
-    private int hdgj;
+    private Integer hdgj;
     private String exr;
     private String exa;
     private String dcto;

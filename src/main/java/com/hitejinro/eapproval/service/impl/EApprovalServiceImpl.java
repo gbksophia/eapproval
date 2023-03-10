@@ -32,10 +32,15 @@ public class EApprovalServiceImpl implements EApprovalService {
     public JSONArray getEApprovalDetail(EApprovalSearchDto searchDto){
         log.info("searchDto="+ searchDto);
 
-        List<EApprovalDetailDto> eAppDetailList = eApprovalDetailRepository.findEApprovalDetailList
+        List<EApprovalDetailDto> eAppDetailList = eApprovalDetailRepository.findByIfkeyAndUserAndLt
                         (searchDto.getIfkey(), searchDto.getUser(), searchDto.getLt()).stream()
                 .map(eApprovalDetail -> modelMapper.map(eApprovalDetail, EApprovalDetailDto.class))
                 .collect(Collectors.toList());
+
+        /*List<EApprovalDetailDto> eAppDetailList = eApprovalDetailRepository.findEApprovalDetailList
+                        (searchDto.getIfkey(), searchDto.getUser(), searchDto.getLt()).stream()
+                .map(eApprovalDetail -> modelMapper.map(eApprovalDetail, EApprovalDetailDto.class))
+                .collect(Collectors.toList());*/
 
         JSONArray eAppDetailArr = new JSONArray();
         for(EApprovalDetailDto dto: eAppDetailList){
@@ -46,6 +51,8 @@ public class EApprovalServiceImpl implements EApprovalService {
             }else if(aaValidate.equals("credit")){
                 dto.setAaCredit(dto.getAa() * -1);
             }
+            dto.setAcr(foreignAmountByCurCode(dto.getAcr(), dto.getCrcd()));
+
             //log.info("aa="+  dto.getAa() + " || aaDebit="+  dto.getAaDebit() + " || aaCredit="+  dto.getAaCredit());
 
             JSONObject jObj = eAppDetailDtoIntoJSONObject(dto);
@@ -73,6 +80,26 @@ public class EApprovalServiceImpl implements EApprovalService {
         }
         return result;
     }
+
+    private Float foreignAmountByCurCode(Float acr, String crcd){
+        //log.info("crcd(통화코드)=" + crcd + " || acr(외화금액) =" + acr);
+        Float result = null;
+        if(acr != null){
+            if(crcd.equals("KRW") || crcd.equals("JPY")){
+                if(acr == 0){
+                    result = null;
+                }
+            }else {
+                if(acr == 0){
+                    result = null;
+                }else{
+                    result = acr/100;
+                }
+            }
+        }
+        return result;
+    }
+
 
     private JSONObject eAppDetailDtoIntoJSONObject(EApprovalDetailDto dto){
         JSONObject jObj = new JSONObject();
@@ -109,6 +136,7 @@ public class EApprovalServiceImpl implements EApprovalService {
 
         jObj.put("acr", dto.getAcr());
         jObj.put("crcd", dto.getCrcd());
+
         jObj.put("crr", dto.getCrr());
         jObj.put("fy", dto.getFy());
         jObj.put("pn", dto.getPn());

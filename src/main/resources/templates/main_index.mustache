@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 {{>layout/main_index_layout_head}}
-<head>
-    <meta charset="UTF-8">
-    <title>전포 전자결재 상신 상세자료 조회 프로그램</title>
-</head>
 <body>
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
@@ -12,7 +8,7 @@
                 <img src="/img/hite-jinro-logo2.jpg" alt="" width="130" height="24" class="d-inline-block align-text-top"></a>
         </div>
     </nav>
-    <div class="container mt-3">
+    <div class="container mt-3 mt-3">
         <div class="row mb-3">
             <h2>전표 전자결재 상신 상세자료 조회 프로그램</h2>
         </div>
@@ -24,12 +20,12 @@
                         <input type="text" class="form-control" name="ifkey" value="{{ifkey}}" readonly>
                     </div>
                     <div class="col-sm-5">
-                        <label class="form-label">USER</label>
+                        <label class="form-label">결재요청자</label>
                         <input type="text" class="form-control" name="user" value="{{user}}" readonly>
                     </div>
-                    <input type="hidden" name="lt" value="AA  " />
+                    <input type="hidden" name="lt" value="AA" />
                     <div class="col-sm-2">
-                        <button onclick="searchEApprovalList()" type="button" class="btn btn-primary form-control" style="margin-top: 1.9rem;">검색</button>
+                        <button onclick="searchEApprovalList_Button()" type="button" class="btn btn-primary form-control" style="margin-top: 1.9rem;">검색</button>
                     </div>
                 </div>
             </form>
@@ -41,7 +37,6 @@
     <footer class="footer">
         <p>Copyright© 2023 HITEJINRO CO.LTD. ALL RIGHTS RESERVED.</p>
     </footer>
-
 </body>
 </html>
 <script src="/js/main_index.js"></script>
