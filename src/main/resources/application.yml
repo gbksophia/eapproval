@@ -17,7 +17,7 @@ spring:
         enabled: true
   jpa:
     database-platform: org.hibernate.dialect.Oracle12cDialect
-    generate-ddl: true
+    generate-ddl: false
     open-in-view: false
     hibernate:
       ddl-auto: none
@@ -64,6 +64,8 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+    hibernate:
+      ddl-auto: none
     main:
       mustache:
         cache: true
@@ -102,6 +104,8 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+    hibernate:
+      ddl-auto: none
     main:
       mustache:
         cache: true
@@ -140,6 +144,8 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+    hibernate:
+      ddl-auto: none
     main:
       mustache:
         cache: true
