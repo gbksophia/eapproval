@@ -64,8 +64,6 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
-    hibernate:
-      ddl-auto: update
     main:
       mustache:
         cache: true
@@ -104,8 +102,6 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
-    hibernate:
-      ddl-auto: update
     main:
       mustache:
         cache: true
@@ -144,8 +140,6 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
-    hibernate:
-      ddl-auto: update
     main:
       mustache:
         cache: true
